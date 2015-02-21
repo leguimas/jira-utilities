@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/png" href="./images/favicon.png"/>
+
+		<title>JIRA Dependency Tree</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap theme -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+
+		<!-- Bootstrap Tree Viewer -->
+		<link href="./components/bootstrap-treeview/bootstrap-treeview.min.css" rel="stylesheet">
+	</head>
+
+	<body role="document">
+
+		<div class="container theme-showcase" role="main">
+
+			<h1>JIRA Dependency Tree</h1>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">JIRA Settings</h3>
+						</div>
+						<div class="panel-body">
+							<form>
+								<div class="row">
+									<div class="col-sm-9">
+										<div class="form-group">
+											<label for="jiraURL">JIRA URL</label>
+											<input type="text" class="form-control" id="jiraURL" placeholder="The base URL for your JIRA. Ex: https://jira.mycompany.com">
+										</div>
+									</div>
+									<div class="col-sm-3">
+										<div class="form-group">
+											<label for="project">Project ID</label>
+											<input type="text" class="form-control" id="project" placeholder="The project identifier in JIRA.">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="username">Username</label>
+											<input type="text" class="form-control" id="username" placeholder="Your JIRA username">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+		 									<label for="password">Password</label>
+		 									<input type="password" class="form-control" id="password" placeholder="Your JIRA password">
+		  								</div>
+	  								</div>
+  								</div>
+  								<button class="btn btn-primary" data-loading-text="Processing..." type="button" id="btnGetDependencyTree">Get dependecy tree</button>
+  							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="messages" class="alert alert-info" role="alert">You have to fill all fields before click the button.</div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Dependency Tree</h3>
+						</div>
+						<div class="panel-body">
+							<div id="tree"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div> 
+
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+		<script src="./components/bootstrap-treeview/bootstrap-treeview.min.js"></script>
+		<script src="./js/jira-dependency-tree.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				$('#btnGetDependencyTree').click(function() {
+					var $btnGetDependencyTree = $(this).button('loading');
+
+					var data = jiraDependencyTree.getDependencies($('#jiraURL').val(), $('#project').val(), $('#username').val(), $('#password').val());
+
+					$('#tree').treeview({data: data});
+					$btnGetDependencyTree.button('reset');
+				});
+			});
+		</script>
+	</body>
+</html>

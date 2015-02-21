@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" type="image/png" href="./images/favicon.png"/>
+
+		<title>JIRA VSM Helper</title>
+
+		<!-- Bootstrap core CSS -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Bootstrap theme -->
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+	</head>
+
+	<body role="document">
+
+		<div class="container theme-showcase" role="main">
+
+			<h1>JIRA VSM Helper</h1>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">JIRA Settings</h3>
+						</div>
+						<div class="panel-body">
+							<form>
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="form-group">
+											<label for="jiraURL">JIRA URL</label>
+											<input type="text" class="form-control" id="jiraURL" placeholder="The base URL for your JIRA. Ex: https://jira.mycompany.com">
+										</div>
+									</div>
+									<div class="col-sm-4">
+										<div class="form-group">
+											<label for="taskKey">TASK Key</label>
+											<input type="text" class="form-control" id="taskKey" placeholder="The task key that you need. Ex: LODS-10">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label for="username">Username</label>
+											<input type="text" class="form-control" id="username" placeholder="Your JIRA username">
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+		 									<label for="password">Password</label>
+		 									<input type="password" class="form-control" id="password" placeholder="Your JIRA password">
+		  								</div>
+	  								</div>
+  								</div>
+  								<button class="btn btn-primary" data-loading-text="Processing..." type="button" id="btnGetTaskData">Get task data</button>
+  							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div id="message-info" class="alert alert-info">You have to fill all fields before click the button.</div>
+			<div id="message-error" class="alert alert-danger" style="display: none;"></div>
+
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="panel panel-default" id="historical-transition" style="display: none;">
+						<div class="panel-heading">
+							<h3 class="panel-title">Historical Transition<span id="task-key-info"></span></h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-stripped">
+								<thead>
+									<tr>
+										<th>Status</th>
+										<th>Duration (days)</th>
+									</tr>
+								</thead>
+								<tbody>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div> 
+
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+		<script src="./js/jira-vsm-helper.js"></script>
+
+		<script>
+			$(document).ready(function() {
+				$('#btnGetTaskData').click(function() {
+					$(this).button('loading');
+					$('#message-error').hide();
+					$('#historical-transition').hide();
+
+					jiraVsmHelper.getTaskData($('#jiraURL').val(), $('#taskKey').val(), $('#username').val(), $('#password').val());
+				});
+			});
+		</script>
+	</body>
+</html>
