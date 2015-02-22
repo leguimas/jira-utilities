@@ -1,9 +1,3 @@
-Number.prototype.toFixedDown = function(digits) {
-    var re = new RegExp("(\\d+\\.\\d{" + digits + "})(\\d)"),
-        m = this.toString().match(re);
-    return m ? parseFloat(m[1]) : this.valueOf();
-};
-
 jiraVsmHelper = {};
 
 jiraVsmHelper.processErrorMessages = function(errorMessages) {
@@ -65,12 +59,22 @@ jiraVsmHelper.calculateTransitionsTime = function(transitions) {
 jiraVsmHelper.showStatusTransitions = function(transitions) {
 	$('#historical-transition table tbody').html("");
 
+	var totalInHours = 0;
+	var totalInDays = 0;
+
 	for (transition in transitions) {
 		var timeInMilliseconds = transitions[transition];
+		var timeInHours = timeInMilliseconds / (1000*60*60);
 		var timeInDays = timeInMilliseconds / (1000*60*60*24);
-		var newRow = "<tr><td>" + transition + "</td><td>" + timeInDays.toFixedDown(2) + "</td></tr>"
+		var newRow = "<tr><td>" + transition + "</td><td>" + Number(timeInDays).toFixed(2) + "</td><td>" + Number(timeInHours).toFixed(2) + "</td></tr>"
 		$('#historical-transition table tbody').append(newRow);
+
+		totalInHours += timeInHours;
+		totalInDays += timeInDays;
 	}
+
+	var newRow = "<tr><th> TOTAL </th><th>" + Number(totalInDays).toFixed(2) + "</th><th>" + Number(totalInHours).toFixed(2) + "</th></tr>"
+	$('#historical-transition table tbody').append(newRow);
 
 	$('#historical-transition').show();
 }
