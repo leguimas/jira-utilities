@@ -6,7 +6,7 @@ I'm not a big JavaScript expert. I have implemented this quickly to help me at m
 
 ## how to use
 Download the [jira-utilities jar file](https://github.com/leguimas/jira-utilities/tree/master/dist) and run it:
-`java -jar jira-utilities-1.0.0.jar`
+`java -jar jira-utilities-1.1.0.jar`
 
 You have to use a JRE 1.7 or higher. After that, open a internet browser and go to [http://localhost:8080/jira-utilities](http://localhost:8080/jira-utilities).
 
