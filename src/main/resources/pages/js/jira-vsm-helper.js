@@ -79,9 +79,9 @@ jiraVsmHelper.showStatusTransitions = function(transitions) {
 	$('#historical-transition').show();
 }
 
-jiraVsmHelper.getTaskData = function(jiraURL, taskKey, username, password) {
+jiraVsmHelper.getData = function(jiraURL, jql, username, password) {
 
-	var jiraURLComplement = "/rest/api/2/issue/" + taskKey.toUpperCase() + "?expand=changelog";
+	var jiraURLComplement = "/rest/api/2/search?jql=" + jql + "&expand=changelog";
 	var jiraCompleteURL = jiraURL + jiraURLComplement;
 
 	$.post('r/jira-api', { url: jiraCompleteURL, username: username, password: password}, 
@@ -97,11 +97,11 @@ jiraVsmHelper.getTaskData = function(jiraURL, taskKey, username, password) {
 				jiraVsmHelper.showStatusTransitions(transitions);
 			}
 			
-			$('#btnGetTaskData').button('reset');
+			$('#btnGetData').button('reset');
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		var errorMessages = []
 		errorMessages.push("HTTP-" + jqXHR.status + ": " + errorThrown);
 		jiraVsmHelper.processErrorMessages(errorMessages);
-		$('#btnGetTaskData').button('reset');
+		$('#btnGetData').button('reset');
 	});
 }

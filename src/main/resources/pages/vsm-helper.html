@@ -40,8 +40,8 @@
 									</div>
 									<div class="col-sm-4">
 										<div class="form-group">
-											<label for="taskKey">TASK Key</label>
-											<input type="text" class="form-control" id="taskKey" placeholder="The task key that you need. Ex: LODS-10">
+											<label for="jql">JQL <a href="https://confluence.atlassian.com/display/JIRA/Advanced+Searching" target="_blank">(what is that?)</a></label>
+											<input type="text" class="form-control" id="jql" placeholder="The JQL you want to execute on JIRA.">
 										</div>
 									</div>
 								</div>
@@ -59,7 +59,7 @@
 		  								</div>
 	  								</div>
   								</div>
-  								<button class="btn btn-primary" data-loading-text="Processing..." type="button" id="btnGetTaskData">Get task data</button>
+  								<button class="btn btn-primary" data-loading-text="Processing..." type="button" id="btnGetData">Get data</button>
   							</form>
 						</div>
 					</div>
@@ -102,18 +102,18 @@
 
 		<script>
 			$(document).ready(function() {
-				$('#btnGetTaskData').click(function() {
+				$('#btnGetData').click(function() {
 					$(this).button('loading');
 					$('#message-error').hide();
 					$('#historical-transition').hide();
 
-					jiraVsmHelper.getTaskData($('#jiraURL').val(), $('#taskKey').val(), $('#username').val(), $('#password').val());
+					jiraVsmHelper.getData($('#jiraURL').val(), $('#jql').val(), $('#username').val(), $('#password').val());
 				});
 
 				$("body").keypress(function(event){
 				    if(event.keyCode == 13){
 				        event.preventDefault();
-				        $("#btnGetTaskData").click();
+				        $("#btnGetData").click();
 				    }
 				});
 			});
